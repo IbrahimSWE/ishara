@@ -20,4 +20,9 @@ class TranscriptionSessionController extends Controller
             ->orderByDesc('started_at')
             ->paginate(15);
     }
+
+    public function show(TranscriptionSession $transcriptionSession)
+    {
+        return response()->json($transcriptionSession);
+    }
 }
