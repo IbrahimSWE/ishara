@@ -38,4 +38,27 @@ class TranscriptionSessionApiTest extends TestCase
             'full_text' => 'Hello, how are you?',
         ]);
     }
+
+    public function test_index_lists_sessions_newest_first(): void
+    {
+        $older = TranscriptionSession::create([
+            'spoken_language' => 'en-US',
+            'full_text' => 'Older session',
+            'started_at' => '2026-08-20T10:00:00Z',
+            'ended_at' => '2026-08-20T10:05:00Z',
+        ]);
+
+        $newer = TranscriptionSession::create([
+            'spoken_language' => 'ar-SA',
+            'full_text' => 'Newer session',
+            'started_at' => '2026-08-22T10:00:00Z',
+            'ended_at' => '2026-08-22T10:05:00Z',
+        ]);
+
+        $response = $this->getJson('/api/sessions');
+
+        $response->assertStatus(200);
+        $ids = collect($response->json('data'))->pluck('id')->all();
+        $this->assertSame([$newer->id, $older->id], $ids);
+    }
 }

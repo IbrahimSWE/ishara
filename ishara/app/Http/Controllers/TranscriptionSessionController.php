@@ -13,4 +13,11 @@ class TranscriptionSessionController extends Controller
 
         return response()->json($session, 201);
     }
+
+    public function index()
+    {
+        return TranscriptionSession::query()
+            ->orderByDesc('started_at')
+            ->paginate(15);
+    }
 }
