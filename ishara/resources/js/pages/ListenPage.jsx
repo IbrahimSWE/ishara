@@ -1,4 +1,6 @@
-import React, { useState } from 'react';
+import React, {
+    useEffect, useRef, useState,
+} from 'react';
 import { useLanguage } from '../context/LanguageContext';
 import useSpeechRecognition from '../hooks/useSpeechRecognition';
 
@@ -16,6 +18,7 @@ export default function ListenPage() {
     const [spokenLanguage, setSpokenLanguage] = useState('en-US');
     const [startedAt, setStartedAt] = useState(null);
     const [saveState, setSaveState] = useState('idle');
+    const stopRequestedRef = useRef(false);
 
     const handleStart = () => {
         if (error) {
@@ -54,11 +57,18 @@ export default function ListenPage() {
         }
     };
 
-    const handleStop = () => {
-        stop();
-        if (finalText.trim().length > 0) {
-            saveSession();
+    useEffect(() => {
+        if (stopRequestedRef.current && !isListening) {
+            stopRequestedRef.current = false;
+            if (finalText.trim().length > 0) {
+                saveSession();
+            }
         }
+    }, [isListening]);
+
+    const handleStop = () => {
+        stopRequestedRef.current = true;
+        stop();
     };
 
     if (!isSupported) {
