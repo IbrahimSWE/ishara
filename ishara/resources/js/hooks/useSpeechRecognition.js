@@ -1,4 +1,6 @@
-import { useCallback, useRef, useState } from 'react';
+import {
+    useCallback, useEffect, useRef, useState,
+} from 'react';
 
 const getRecognitionConstructor = () => window.SpeechRecognition || window.webkitSpeechRecognition || null;
 
@@ -65,6 +67,10 @@ export default function useSpeechRecognition() {
         setFinalText('');
         setInterimText('');
         setError(null);
+    }, []);
+
+    useEffect(() => () => {
+        recognitionRef.current?.abort();
     }, []);
 
     return { isSupported, isListening, interimText, finalText, error, start, stop, reset };

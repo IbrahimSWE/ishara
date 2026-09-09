@@ -118,6 +118,12 @@ body {
     cursor: pointer;
 }
 
+.history-page__pagination {
+    display: flex;
+    gap: 0.5rem;
+    margin-top: 1rem;
+}
+
 .history-page__detail {
     margin-top: 1.5rem;
     padding: 1rem;

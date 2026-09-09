@@ -16,13 +16,17 @@ export default function ListenPage() {
     } = useSpeechRecognition();
 
     const [spokenLanguage, setSpokenLanguage] = useState('en-US');
+    const [sessionLanguage, setSessionLanguage] = useState(null);
     const [startedAt, setStartedAt] = useState(null);
     const [saveState, setSaveState] = useState('idle');
     const stopRequestedRef = useRef(false);
 
     const handleStart = () => {
-        if (error) {
-            // Resuming after a recognition error — keep the transcript captured so far.
+        const hasUnsavedContent = finalText.trim().length > 0 && saveState !== 'saved';
+
+        if (hasUnsavedContent) {
+            // Resuming after an error, or a recognizer that ended on its own without
+            // erroring — keep the transcript captured so far instead of wiping it.
             start(spokenLanguage);
             return;
         }
@@ -30,7 +34,15 @@ export default function ListenPage() {
         reset();
         setSaveState('idle');
         setStartedAt(new Date().toISOString());
+        setSessionLanguage(spokenLanguage);
         start(spokenLanguage);
+    };
+
+    const handleNewSession = () => {
+        reset();
+        setSaveState('idle');
+        setStartedAt(null);
+        setSessionLanguage(null);
     };
 
     const saveSession = async () => {
@@ -40,7 +52,7 @@ export default function ListenPage() {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
                 body: JSON.stringify({
-                    spoken_language: spokenLanguage,
+                    spoken_language: sessionLanguage,
                     full_text: finalText.trim(),
                     started_at: startedAt,
                     ended_at: new Date().toISOString(),
@@ -93,8 +105,11 @@ export default function ListenPage() {
             <button type="button" onClick={isListening ? handleStop : handleStart}>
                 {isListening ? t('stopListening') : t('startListening')}
             </button>
+            <button type="button" onClick={handleNewSession} disabled={isListening}>
+                {t('newSession')}
+            </button>
 
-            <div className="listen-page__transcript">
+            <div className="listen-page__transcript" dir="auto">
                 <span>{finalText}</span>
                 <span className="listen-page__interim">{interimText}</span>
             </div>

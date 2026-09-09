@@ -15,7 +15,7 @@ transcribing speech to on-screen text in real time.
 1. Start **MySQL** (and, optionally, **Apache** for phpMyAdmin) in the XAMPP Control Panel.
 2. From this directory, install PHP dependencies: `composer install`
 3. Install JS dependencies: `npm install`
-4. Copy `.env.example` to `.env` if you don't already have one, then confirm it has:
+4. Copy `.env.example` to `.env` if you don't already have one — it already has:
    ```
    DB_CONNECTION=mysql
    DB_HOST=127.0.0.1

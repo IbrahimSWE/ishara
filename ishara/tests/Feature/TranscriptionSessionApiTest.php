@@ -39,6 +39,36 @@ class TranscriptionSessionApiTest extends TestCase
         ]);
     }
 
+    public function test_store_rejects_invalid_spoken_language(): void
+    {
+        $payload = [
+            'spoken_language' => 'fr-FR',
+            'full_text' => 'Hello, how are you?',
+            'started_at' => '2026-08-23T10:00:00Z',
+            'ended_at' => '2026-08-23T10:05:00Z',
+        ];
+
+        $response = $this->postJson('/api/sessions', $payload);
+
+        $response->assertStatus(422);
+        $response->assertJsonValidationErrors(['spoken_language']);
+    }
+
+    public function test_store_rejects_ended_at_before_started_at(): void
+    {
+        $payload = [
+            'spoken_language' => 'en-US',
+            'full_text' => 'Hello, how are you?',
+            'started_at' => '2026-08-23T10:05:00Z',
+            'ended_at' => '2026-08-23T10:00:00Z',
+        ];
+
+        $response = $this->postJson('/api/sessions', $payload);
+
+        $response->assertStatus(422);
+        $response->assertJsonValidationErrors(['ended_at']);
+    }
+
     public function test_index_lists_sessions_newest_first(): void
     {
         $older = TranscriptionSession::create([

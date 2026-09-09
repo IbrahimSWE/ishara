@@ -7,6 +7,7 @@ const translations = {
         spokenLanguageLabel: 'Spoken language',
         startListening: 'Start Listening',
         stopListening: 'Stop',
+        newSession: 'New Session',
         recognitionError: 'Recognition error',
         sessionSaved: 'Session saved',
         saveFailed: 'Could not save this session.',
@@ -15,6 +16,8 @@ const translations = {
         micPermissionDenied: 'Microphone access was denied. Please allow microphone access in your browser and try again.',
         historyLoadError: 'Could not load past sessions.',
         historyDetailLoadError: 'Could not load session details.',
+        historyPrevPage: 'Previous',
+        historyNextPage: 'Next',
     },
     ar: {
         appName: 'إشارة',
@@ -24,6 +27,7 @@ const translations = {
         spokenLanguageLabel: 'لغة التحدث',
         startListening: 'ابدأ الاستماع',
         stopListening: 'إيقاف',
+        newSession: 'جلسة جديدة',
         recognitionError: 'خطأ في التعرف على الصوت',
         sessionSaved: 'تم حفظ الجلسة',
         saveFailed: 'تعذر حفظ هذه الجلسة.',
@@ -32,6 +36,8 @@ const translations = {
         micPermissionDenied: 'تم رفض الوصول إلى الميكروفون. يرجى السماح بالوصول إلى الميكروفون من إعدادات المتصفح والمحاولة مرة أخرى.',
         historyLoadError: 'تعذر تحميل الجلسات السابقة.',
         historyDetailLoadError: 'تعذر تحميل تفاصيل الجلسة.',
+        historyPrevPage: 'السابق',
+        historyNextPage: 'التالي',
     },
 };
 
