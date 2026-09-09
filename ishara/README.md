@@ -1,59 +1,62 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Ishara (إشارة) — Phase 1: Real-Time Speech-to-Text
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+Helps deaf and hard-of-hearing people follow spoken conversation by
+transcribing speech to on-screen text in real time.
 
-## About Laravel
+## Requirements
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+- XAMPP (Apache + MySQL + PHP)
+- Composer
+- Node.js + npm
+- Google Chrome or Microsoft Edge (for Web Speech API support)
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## First-time setup
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+1. Start **MySQL** (and, optionally, **Apache** for phpMyAdmin) in the XAMPP Control Panel.
+2. From this directory, install PHP dependencies: `composer install`
+3. Install JS dependencies: `npm install`
+4. Copy `.env.example` to `.env` if you don't already have one, then confirm it has:
+   ```
+   DB_CONNECTION=mysql
+   DB_HOST=127.0.0.1
+   DB_PORT=3306
+   DB_DATABASE=ishara_db
+   DB_USERNAME=root
+   DB_PASSWORD=
+   ```
+5. Create the database (once): open phpMyAdmin at `http://localhost/phpmyadmin` and create a database named `ishara_db`, or run:
+   ```
+   "C:\xampp\mysql\bin\mysql.exe" -u root -e "CREATE DATABASE IF NOT EXISTS ishara_db;"
+   ```
+6. Generate an app key (if not already set): `php artisan key:generate`
+7. Run migrations: `php artisan migrate`
 
-## Learning Laravel
+## Running locally
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework. You can also check out [Laravel Learn](https://laravel.com/learn), where you will be guided through building a modern Laravel application.
+Ishara runs via Laravel's own server, not through XAMPP's Apache — XAMPP is only needed here for MySQL (and phpMyAdmin).
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+1. Make sure XAMPP's **MySQL** module is running.
+2. Build frontend assets: `npm run build` (or `npm run dev` for hot-reload while developing)
+3. Start the app: `php artisan serve`
+4. Open `http://127.0.0.1:8000` in Chrome or Edge.
 
-## Laravel Sponsors
+## Running the test suite
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+```
+php artisan test
+```
 
-### Premium Partners
+Tests run against an in-memory SQLite database (configured in `phpunit.xml`) and never touch `ishara_db`.
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+## Project structure
 
-## Contributing
+- `app/Models/TranscriptionSession.php` — one row per listening period
+- `app/Http/Controllers/TranscriptionSessionController.php` — `/api/sessions` endpoints
+- `resources/js/pages/ListenPage.jsx` — live speech-to-text screen
+- `resources/js/pages/HistoryPage.jsx` — past sessions screen
+- `resources/js/hooks/useSpeechRecognition.js` — Web Speech API wrapper
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+## Roadmap
 
-## Code of Conduct
-
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
-
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
-
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+- **Phase 2:** text-to-sign-language video
+- **Phase 3:** camera-based sign language recognition

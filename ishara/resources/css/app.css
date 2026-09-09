@@ -1,11 +1,127 @@
-@import 'tailwindcss';
+:root {
+    color-scheme: light;
+    font-family: system-ui, -apple-system, "Segoe UI", Tahoma, Arial, sans-serif;
+}
 
-@source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
-@source '../../storage/framework/views/*.php';
-@source '../**/*.blade.php';
-@source '../**/*.js';
+body {
+    margin: 0;
+    background: #f7f7f9;
+    color: #1a1a1a;
+}
 
-@theme {
-    --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
-        'Segoe UI Symbol', 'Noto Color Emoji';
+.app-header {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    padding: 1rem 1.5rem;
+    background: #ffffff;
+    border-bottom: 1px solid #e0e0e5;
+}
+
+.app-header__title {
+    font-size: 1.25rem;
+    font-weight: 700;
+}
+
+.app-header__nav {
+    display: flex;
+    gap: 1rem;
+    flex: 1;
+}
+
+.app-header__nav a {
+    color: #1a1a1a;
+    text-decoration: none;
+}
+
+.app-header__lang-toggle {
+    border: 1px solid #cfcfd6;
+    background: #fff;
+    border-radius: 6px;
+    padding: 0.4rem 0.8rem;
+    cursor: pointer;
+}
+
+.app-main {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 2rem 1.5rem;
+}
+
+.listen-page {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.listen-page__language-picker {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    max-width: 220px;
+}
+
+.listen-page button {
+    align-self: flex-start;
+    padding: 0.6rem 1.4rem;
+    font-size: 1rem;
+    border-radius: 8px;
+    border: none;
+    background: #2f6fed;
+    color: #fff;
+    cursor: pointer;
+}
+
+.listen-page__transcript {
+    min-height: 8rem;
+    padding: 1rem;
+    background: #fff;
+    border: 1px solid #e0e0e5;
+    border-radius: 8px;
+    font-size: 1.1rem;
+    line-height: 1.6;
+    white-space: pre-wrap;
+}
+
+.listen-page__interim {
+    color: #8a8a93;
+    font-style: italic;
+}
+
+.listen-page__error,
+.listen-page__save-error {
+    color: #b3261e;
+}
+
+.listen-page__saved {
+    color: #1b7f3a;
+}
+
+.history-page__list {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.history-page__list button {
+    width: 100%;
+    text-align: start;
+    display: flex;
+    gap: 1rem;
+    padding: 0.75rem 1rem;
+    background: #fff;
+    border: 1px solid #e0e0e5;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.history-page__detail {
+    margin-top: 1.5rem;
+    padding: 1rem;
+    background: #fff;
+    border: 1px solid #e0e0e5;
+    border-radius: 8px;
+    white-space: pre-wrap;
 }
