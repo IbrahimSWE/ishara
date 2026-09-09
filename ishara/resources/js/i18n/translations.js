@@ -13,6 +13,7 @@ const translations = {
         retry: 'Retry',
         unsupportedBrowser: 'Your browser does not support live speech recognition. Please use Google Chrome or Microsoft Edge.',
         micPermissionDenied: 'Microphone access was denied. Please allow microphone access in your browser and try again.',
+        historyLoadError: 'Could not load past sessions.',
     },
     ar: {
         appName: 'إشارة',
@@ -28,6 +29,7 @@ const translations = {
         retry: 'إعادة المحاولة',
         unsupportedBrowser: 'متصفحك لا يدعم التعرف الفوري على الكلام. يرجى استخدام Google Chrome أو Microsoft Edge.',
         micPermissionDenied: 'تم رفض الوصول إلى الميكروفون. يرجى السماح بالوصول إلى الميكروفون من إعدادات المتصفح والمحاولة مرة أخرى.',
+        historyLoadError: 'تعذر تحميل الجلسات السابقة.',
     },
 };
 
