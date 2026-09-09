@@ -89,7 +89,8 @@ body {
 }
 
 .listen-page__error,
-.listen-page__save-error {
+.listen-page__save-error,
+.listen-page__unsupported {
     color: #b3261e;
 }
 
@@ -124,4 +125,9 @@ body {
     border: 1px solid #e0e0e5;
     border-radius: 8px;
     white-space: pre-wrap;
+}
+
+.history-page__error,
+.history-page__detail-error {
+    color: #b3261e;
 }
