@@ -7,6 +7,7 @@ export default function HistoryPage() {
     const [selectedId, setSelectedId] = useState(null);
     const [selectedSession, setSelectedSession] = useState(null);
     const [loadError, setLoadError] = useState(false);
+    const [detailLoadError, setDetailLoadError] = useState(false);
 
     useEffect(() => {
         fetch('/api/sessions', { headers: { Accept: 'application/json' } })
@@ -21,12 +22,18 @@ export default function HistoryPage() {
     useEffect(() => {
         if (selectedId === null) {
             setSelectedSession(null);
+            setDetailLoadError(false);
             return;
         }
 
+        setDetailLoadError(false);
         fetch(`/api/sessions/${selectedId}`, { headers: { Accept: 'application/json' } })
-            .then((response) => response.json())
-            .then((data) => setSelectedSession(data));
+            .then((response) => {
+                if (!response.ok) throw new Error('failed to load');
+                return response.json();
+            })
+            .then((data) => setSelectedSession(data))
+            .catch(() => setDetailLoadError(true));
     }, [selectedId]);
 
     if (loadError) {
@@ -47,10 +54,16 @@ export default function HistoryPage() {
                 ))}
             </ul>
 
-            {selectedSession && (
+            {selectedId !== null && (
                 <div className="history-page__detail">
-                    <h2>{new Date(selectedSession.started_at).toLocaleString()}</h2>
-                    <p>{selectedSession.full_text}</p>
+                    {detailLoadError ? (
+                        <p className="history-page__detail-error">{t('historyDetailLoadError')}</p>
+                    ) : selectedSession ? (
+                        <>
+                            <h2>{new Date(selectedSession.started_at).toLocaleString()}</h2>
+                            <p>{selectedSession.full_text}</p>
+                        </>
+                    ) : null}
                 </div>
             )}
         </div>
